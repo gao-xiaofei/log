@@ -16,11 +16,11 @@
 #define sleep_ms(ms) usleep((ms) * 1000)
 
 
-
 /**
  * 网络日志回调 - 模拟发送日志到网络服务器
  */
-static void network_callback(log_Event *ev) {
+static void network_callback(log_Event *ev) 
+{
     static int packet_count = 0;
     
     // 模拟网络包格式
@@ -41,8 +41,10 @@ static void network_callback(log_Event *ev) {
 
 static pthread_mutex_t log_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static void log_lock_function(bool lock, void *udata) {
+static void log_lock_function(bool lock, void *udata) 
+{
     (void)udata; 
+
     if (lock) {
         pthread_mutex_lock(&log_mutex);
     } else {
@@ -52,7 +54,8 @@ static void log_lock_function(bool lock, void *udata) {
 
 // ==================== 线程函数 ====================
 
-static void *thread_func(void *arg) {
+static void *thread_func(void *arg) 
+{
     int thread_id = *(int*)arg;
     
     for (int i = 0; i < 5; i++) {
@@ -72,10 +75,10 @@ static void *thread_func(void *arg) {
 }
 
 
-
 // ==================== 边界条件测试 ====================
 
-static void edge_case_test() {
+static void edge_case_test() 
+{
     printf("\n=== 边界条件测试 ===\n");
     
     // 测试空消息
@@ -101,12 +104,10 @@ static void edge_case_test() {
 
 
 
-
-
-
 // ==================== 多线程测试 ====================
 
-static void multithread_test() {
+static void multithread_test() 
+{
     printf("\n=== 多线程测试 ===\n");
     
     // 设置线程锁
@@ -136,12 +137,13 @@ static void multithread_test() {
 }
 
 
-
 // ==================== 主函数 ====================
 
-int main() {
+int main() 
+{
+
     printf("========== 日志库示例 ==========\n");
-    
+
     // 初始配置
     printf("日志库版本: %s\n", LOG_VERSION);
     log_set_level(LOG_TRACE);  // 设置为最详细级别
@@ -157,6 +159,7 @@ int main() {
     log_error("这是ERROR级别日志");
     log_fatal("这是FATAL级别日志");
     
+
 
         // 创建日志文件
     FILE *log_file = fopen("test.log", "a");
@@ -183,7 +186,7 @@ int main() {
     log_set_quiet(false);
     log_info("静默模式已关闭，这条消息应该显示");
     
-    
+
     // 测试不同日志级别字符串
     printf("\n日志级别字符串测试:\n");
     for (int i = LOG_TRACE; i <= LOG_FATAL; i++) {
