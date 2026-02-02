@@ -2,7 +2,6 @@
 build
 release
 debug
-test
 
 CMakeLists.txt.user
 CMakeCache.txt
