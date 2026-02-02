@@ -15,6 +15,40 @@
 
 #define sleep_ms(ms) usleep((ms) * 1000)
 
+#define ENABLE_LOG1 1
+#define ENABLE_LOG2 0
+
+#if ( ENABLE_LOG1 == 1 )
+#define log1_log_trace(...) log_log(LOG_TRACE, __FILE__, __LINE__, __VA_ARGS__)
+#define log1_log_debug(...) log_log(LOG_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
+#define log1_log_info(...)  log_log(LOG_INFO,  __FILE__, __LINE__, __VA_ARGS__)
+#define log1_log_warn(...)  log_log(LOG_WARN,  __FILE__, __LINE__, __VA_ARGS__)
+#define log1_log_error(...) log_log(LOG_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+#define log1_log_fatal(...) log_log(LOG_FATAL, __FILE__, __LINE__, __VA_ARGS__)
+#else
+#define log1_log_trace(...) (void)0
+#define log1_log_debug(...) (void)0
+#define log1_log_info(...)  (void)0
+#define log1_log_warn(...)  (void)0
+#define log1_log_error(...) log_log(LOG_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+#define log1_log_fatal(...) log_log(LOG_FATAL, __FILE__, __LINE__, __VA_ARGS__)
+#endif
+
+#if ( ENABLE_LOG2 == 1 )
+#define log2_log_trace(...) log_log(LOG_TRACE, __FILE__, __LINE__, __VA_ARGS__)
+#define log2_log_debug(...) log_log(LOG_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
+#define log2_log_info(...)  log_log(LOG_INFO,  __FILE__, __LINE__, __VA_ARGS__)
+#define log2_log_warn(...)  log_log(LOG_WARN,  __FILE__, __LINE__, __VA_ARGS__)
+#define log2_log_error(...) log_log(LOG_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+#define log2_log_fatal(...) log_log(LOG_FATAL, __FILE__, __LINE__, __VA_ARGS__)
+#else
+#define log2_log_trace(...) (void)0
+#define log2_log_debug(...) (void)0
+#define log2_log_info(...)  (void)0
+#define log2_log_warn(...)  (void)0
+#define log2_log_error(...) log_log(LOG_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+#define log2_log_fatal(...) log_log(LOG_FATAL, __FILE__, __LINE__, __VA_ARGS__)
+#endif
 
 /**
  * 网络日志回调 - 模拟发送日志到网络服务器
@@ -159,8 +193,19 @@ int main()
     log_error("这是ERROR级别日志");
     log_fatal("这是FATAL级别日志");
     
+    log1_log_trace("log1这是TRACE级别日志");
+    log1_log_debug("log1这是DEBUG级别日志");
+    log1_log_info("log1这是INFO级别日志");
+    log1_log_warn("log1这是WARN级别日志");
+    log1_log_error("log1这是ERROR级别日志");
+    log1_log_fatal("log1这是FATAL级别日志");
 
-
+    log2_log_trace("log2这是TRACE级别日志");
+    log2_log_debug("log2这是DEBUG级别日志");
+    log2_log_info("log2这是INFO级别日志");
+    log2_log_warn("log2这是WARN级别日志");
+    log2_log_error("log2这是ERROR级别日志");
+    log2_log_fatal("log2这是FATAL级别日志");
         // 创建日志文件
     FILE *log_file = fopen("test.log", "a");
     if (!log_file) {
